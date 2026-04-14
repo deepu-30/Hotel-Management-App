@@ -1,0 +1,18 @@
+<h2>Doctor Dashboard</h2>
+
+<a href="/add-slot/">Add Slot</a>
+
+<ul>
+{% for slot in slots %}
+ <li>
+  {{ slot.date }} - {{ slot.time }} -
+  {% if slot.is_booked %}
+    ❌ Booked
+  {% else %}
+    ✅ Available
+  {% endif %}
+</li>
+{% endfor %}
+</ul>
+
+<a href="/logout/">Logout</a>

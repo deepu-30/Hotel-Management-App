@@ -1,0 +1,12 @@
+<form method="post">
+  {% csrf_token %}
+  <input name="username"><br>
+  <input name="password" type="password"><br>
+
+  <select name="role">
+    <option value="doctor">Doctor</option>
+    <option value="patient">Patient</option>
+  </select>
+
+  <button type="submit">Register</button>
+</form>

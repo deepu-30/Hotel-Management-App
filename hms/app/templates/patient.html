@@ -1,0 +1,12 @@
+<h2>Patient Dashboard</h2>
+
+<ul>
+{% for slot in slots %}
+  <li>
+    {{ slot.doctor.username }} - {{ slot.date }} - {{ slot.time }}
+    <a href="/book/{{ slot.id }}/">Book</a>
+  </li>
+{% endfor %}
+</ul>
+
+<a href="/logout/">Logout</a>

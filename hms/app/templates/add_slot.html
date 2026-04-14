@@ -1,0 +1,7 @@
+<form method="post">
+  {% csrf_token %}
+  <input type="date" name="date"><br>
+  <input type="time" name="time"><br>
+  <button type="submit">Add Slot</button>
+  <a href="/logout/">Logout</a>
+</form>
