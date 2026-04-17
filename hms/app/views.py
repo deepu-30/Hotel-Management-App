@@ -95,6 +95,14 @@ def book_slot(request, slot_id):
     slot.is_booked = True
     slot.save()
 
+    # after slot.save()
+
+    create_calendar_event(
+        doctor=slot.doctor.username,
+        patient=request.user.username,
+        slot=slot
+    )
+
     requests.post("http://localhost:3000/send", json={
         "type": "BOOKING_CONFIRMATION",
         "to": "test@tempmail.com"
@@ -102,8 +110,42 @@ def book_slot(request, slot_id):
 
     return redirect('/dashboard/')
 
+import pickle
+from googleapiclient.discovery import build
+from datetime import datetime, timedelta
+
+def create_calendar_event(doctor, patient, slot):
+    with open('token.pickle', 'rb') as token:
+        creds = pickle.load(token)
+
+    service = build('calendar', 'v3', credentials=creds)
+
+    start_datetime = datetime.combine(slot.date, slot.time)
+    end_datetime = start_datetime + timedelta(minutes=30)
+
+    event = {
+        'summary': f'Appointment with {patient}',
+        'description': 'Hospital Appointment',
+        'start': {
+            'dateTime': start_datetime.isoformat(),
+            'timeZone': 'Asia/Kolkata',
+        },
+        'end': {
+            'dateTime': end_datetime.isoformat(),
+            'timeZone': 'Asia/Kolkata',
+        },
+    }
+
+    event = service.events().insert(
+        calendarId='primary',
+        body=event
+    ).execute()
+
+    print("📅 Event created:", event.get('htmlLink'))
+
 from django.contrib.auth import logout
 
 def logout_view(request):
     logout(request)
     return redirect('/')
+
