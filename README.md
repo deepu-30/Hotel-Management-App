@@ -51,3 +51,14 @@ This service is designed to be integrated with a Django application to handle:
 ## Architecture
 `Django Backend → Serverless API → Email Service`
 
+## Run the following commands
+For to run app in local host
+`python runserver manage.py`
+
+For to run email functionality
+`serverless offline`
+
+### After integrating google calendar with goolge OAuth it'll reflect in calendar ###
+<img width="1705" height="1039" alt="image" src="https://github.com/user-attachments/assets/8559a6dd-8032-4259-ae49-4377d2bb6fa5" />
+
+NOTE: Credentials.json will be in the same hms folder where manage.py present.
